@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 09, 2024 at 07:46 AM
+-- Generation Time: Aug 09, 2024 at 07:29 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,16 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `tvms`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `all_channel`
---
-
-CREATE TABLE `all_channel` (
-  `all_channel_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -78,20 +68,10 @@ CREATE TABLE `normal_channel` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `packages`
+-- Table structure for table `program_routine`
 --
 
-CREATE TABLE `packages` (
-  `package_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `proggrame_routin`
---
-
-CREATE TABLE `proggrame_routin` (
+CREATE TABLE `program_routine` (
   `programe_id` int(11) NOT NULL,
   `channel_id` int(11) NOT NULL,
   `time_slot_id` int(11) NOT NULL,
@@ -130,20 +110,22 @@ CREATE TABLE `time_slot` (
 
 CREATE TABLE `user` (
   `user_id` int(11) NOT NULL,
-  `user_name` varchar(50) NOT NULL,
-  `user_password` varchar(50) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(50) NOT NULL,
   `package_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Indexes for dumped tables
+-- Dumping data for table `user`
 --
 
+INSERT INTO `user` (`user_id`, `username`, `password`, `package_id`) VALUES
+(1, 'rishabh', 'rishabh', 1),
+(4, 'admin', 'root', 1);
+
 --
--- Indexes for table `all_channel`
+-- Indexes for dumped tables
 --
-ALTER TABLE `all_channel`
-  ADD PRIMARY KEY (`all_channel_id`);
 
 --
 -- Indexes for table `channel`
@@ -170,15 +152,9 @@ ALTER TABLE `normal_channel`
   ADD PRIMARY KEY (`noraml_id`);
 
 --
--- Indexes for table `packages`
+-- Indexes for table `program_routine`
 --
-ALTER TABLE `packages`
-  ADD PRIMARY KEY (`package_id`);
-
---
--- Indexes for table `proggrame_routin`
---
-ALTER TABLE `proggrame_routin`
+ALTER TABLE `program_routine`
   ADD PRIMARY KEY (`programe_id`);
 
 --
@@ -197,17 +173,12 @@ ALTER TABLE `time_slot`
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`user_id`);
+  ADD PRIMARY KEY (`user_id`),
+  ADD UNIQUE KEY `username` (`username`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
-
---
--- AUTO_INCREMENT for table `all_channel`
---
-ALTER TABLE `all_channel`
-  MODIFY `all_channel_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `channel`
@@ -234,12 +205,6 @@ ALTER TABLE `normal_channel`
   MODIFY `noraml_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `packages`
---
-ALTER TABLE `packages`
-  MODIFY `package_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `record_shows`
 --
 ALTER TABLE `record_shows`
@@ -255,7 +220,7 @@ ALTER TABLE `time_slot`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
