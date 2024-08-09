@@ -1,0 +1,52 @@
+***********************************************TABLES IN TV SYSTEM*********************************************************
+
+Channels: chann_id(pk), chann_name, type, language, isHD
+
+program_routine: chann_id(pk), time_slot_id(pk), program_name
+
+	## here chann_id and time_slot_id togather make a composite key
+
+
+timeslots: time_slot_id(pk), start_time, end_time
+
+users: user_id(pk), username, password, package_id
+
+packages: FreeChannels
+	  HDChannels
+	  NormalChannels
+	  AllChannels
+
+recorded_shows: rec_id(pk), program_name, time_slot_id
+
+
+***********************************************FEATURES*********************************************************
+
+1) Previous channel current channel next channel
+	-- Que and stack is used to play next etc
+	-- shows current channel that is playing
+	-- back and next options are given
+
+2) admin login --> at login page
+	-- add channel
+	-- change user package
+	-- delete channel
+	-- update channel
+
+3) Search channel
+	-- search by name
+	-- search by id
+	-- search by type
+	-- search by language
+
+4) Record shows:
+	Here all the rows from recorded shows are fetched from database and added to arraylist and then according to the user manipulated
+	-- Record
+	-- View Recordings
+	-- Delete Recordings
+
+5) Display all channels
+
+6) Change profile settings
+	-- show current settings
+	-- change password
+
