@@ -50,3 +50,16 @@ recorded_shows: rec_id(pk), program_name, time_slot_id
 	-- show current settings
 	-- change password
 
+##GIT commands
+
+--To add your updates
+	git add *
+	git commit -m "your message"
+	git push -u origin manipulated
+
+	then go to github and then merge with parent.
+
+-- to fetch updated main branch
+	git fetch upstream
+	git rebase upstream/main
+	
