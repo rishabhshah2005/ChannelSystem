@@ -70,9 +70,9 @@ public class SQLQueries {
     }
   }
   //Method to change usernmae
-  public void changeUsername() throws Exception{
+  public void changeUsername(Scanner sc) throws Exception{
     Statement st = con.createStatement();
-    Scanner sc = new Scanner(System.in);
+    
     System.out.println("Enter the name of the user ");
             String user = sc.next();
             System.out.println("Enter the password ");
@@ -106,10 +106,10 @@ public class SQLQueries {
         
   }
   //Method to change user password
-  public void changeUserpassword() throws Exception{
+  public void changeUserpassword(Scanner sc) throws Exception{
 
     Statement st = con.createStatement();
-    Scanner sc = new Scanner(System.in);
+    
     System.out.println("Enter the name of the user ");
     String user = sc.next();
     System.out.println("Enter the old password ");
