@@ -32,7 +32,7 @@ public class SQLQueries {
   }
 
   public boolean checkUsername(String user) throws SQLException {
-    String sql = "select * from user where username=?";
+    String sql = "select * from user where user_name=?";
     PreparedStatement pst = con.prepareStatement(sql);
     pst.setString(1, user);
     ResultSet rs = pst.executeQuery();
@@ -42,12 +42,12 @@ public class SQLQueries {
   public void createUser(Scanner inp) throws SQLException {
     System.out.print("Create username: ");
     String username = inp.nextLine();
-    while (checkUsername(username)) {
-      System.out.println(Misc.ANSI_RED + "Username already exists! Pick a different one" + Misc.ANSI_RESET);
-      System.out.print("Create username: ");
-      username = inp.nextLine();
-    }
-
+    // while (checkUsername(username)) {
+    //   System.out.println(Misc.ANSI_RED + "Username already exists! Pick a different one" + Misc.ANSI_RESET);
+    //   System.out.print("Create username: ");
+    //   username = inp.nextLine();
+    // }
+      // inp.nextLine();
     System.out.print("Create Password: ");
     String password = inp.nextLine();
 
