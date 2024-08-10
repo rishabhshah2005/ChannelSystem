@@ -41,7 +41,7 @@ public class Main {
                         } else {
                             // Whatever classes are supposed to run after login is successfull go below
                             Home h = new Home();
-                            h.main(inp);
+                            h.main(inp, current_user_id);
                         }
                     }
                     break;
