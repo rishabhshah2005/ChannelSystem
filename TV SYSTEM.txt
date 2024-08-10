@@ -48,9 +48,10 @@ recorded_shows: rec_id(pk), program_name, time_slot_id
 
 6) Change profile settings
 	-- show current settings
-	-- change password
+	{current username ,password ,package}
+	-- change username password and ask for confirmation
 
-##GIT commands
+## GIT commands
 
 --To add your updates
 	git add *
