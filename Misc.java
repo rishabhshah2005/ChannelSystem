@@ -1,8 +1,11 @@
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 class UserDeleted extends Exception {
 }
@@ -88,4 +91,21 @@ class Misc {
         }
         return n;
     }
+
+    public static boolean checkDateIsInBetween(LocalTime input, LocalTime start, LocalTime end) {
+        return input.isAfter(start) && input.isBefore(end);
+    }
+}
+
+class PlayQue {
+    String channel_name, prog_name;
+    LocalTime start, end;
+
+    public PlayQue(String channel_name, String prog_name, LocalTime start, LocalTime end) {
+        this.channel_name = channel_name;
+        this.prog_name = prog_name;
+        this.start = start;
+        this.end = end;
+    }
+
 }

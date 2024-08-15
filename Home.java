@@ -1,7 +1,10 @@
 import java.sql.SQLException;
 import java.util.Scanner;
+import DS.LinkedListPrac;
 
 public class Home {
+    LinkedListPrac<PlayQue> curr_playing;
+
     void printMenu() {
         System.out.println("1) Play TV");
         System.out.println("2) Search Channels"); // DS is required here
