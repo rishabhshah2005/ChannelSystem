@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 class UserDeleted extends Exception {
 }
@@ -81,6 +82,18 @@ class Misc {
     public static boolean checkTimeIsInBetween(LocalTime input, LocalTime start, LocalTime end) {
         return input.isAfter(start) && input.isBefore(end);
     }
+
+    public static String printTime(LocalTime t) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("hh:mm a");
+        String res = dtf.format(t).toUpperCase();
+        return res;
+
+    }
+
+    // public static void main(String[] args) {
+    //     LocalTime t = LocalTime.now();
+    //     System.out.println(printTime(t));
+    // }
 }
 
 class PlayQue {

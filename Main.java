@@ -40,7 +40,7 @@ public class Main {
                             // If user is admin then a special class has to run
                         } else {
                             // Whatever classes are supposed to run after login is successfull go below
-                            Home h = new Home();
+                            Home h = new Home(current_user_id, quer);
                             h.main(inp, current_user_id);
                         }
                     }
@@ -52,6 +52,7 @@ public class Main {
                     break;
 
                 case 3:
+                    quer.con.close();
                     break;
 
                 default:

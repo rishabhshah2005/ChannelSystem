@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 18, 2024 at 07:05 PM
+-- Generation Time: Aug 18, 2024 at 07:19 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -1461,7 +1461,7 @@ INSERT INTO `user` (`user_id`, `username`, `password`, `package_id`) VALUES
 --
 DROP TABLE IF EXISTS `currently_playing`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `currently_playing`  AS SELECT `playque`.`channel_id` AS `channel_id`, `playque`.`channel_name` AS `channel_name`, `playque`.`program_name` AS `program_name`, `playque`.`start_time` AS `start_time`, `playque`.`end_time` AS `end_time` FROM `playque` WHERE curtime() > `playque`.`start_time` AND `playque`.`end_time` > curtime() ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `currently_playing`  AS SELECT `playque`.`channel_id` AS `channel_id`, `playque`.`channel_name` AS `channel_name`, `playque`.`program_name` AS `program_name`, `playque`.`start_time` AS `start_time`, `playque`.`end_time` AS `end_time` FROM `playque` WHERE curtime() >= `playque`.`start_time` AND `playque`.`end_time` >= curtime() ;
 
 -- --------------------------------------------------------
 
