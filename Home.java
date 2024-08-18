@@ -1,7 +1,10 @@
 import java.sql.SQLException;
 import java.util.Scanner;
+import DS.LinkedListPrac;
 
 public class Home {
+    LinkedListPrac<PlayQue> curr_playing;
+
     void printMenu() {
         System.out.println("1) Play TV");
         System.out.println("2) Search Channels"); // DS is required here
@@ -11,7 +14,7 @@ public class Home {
         System.out.println("6) Exit");
     }
 
-    public void main(Scanner inp) throws SQLException, ClassNotFoundException {
+    public void main(Scanner inp, int id) throws SQLException, ClassNotFoundException {
         Misc.cls();
         System.out.println(Misc.ANSI_GREEN + "Login successfull" + Misc.ANSI_RESET);
 
@@ -30,6 +33,8 @@ public class Home {
                 case 4:
                     break;
                 case 5:
+                    Settings st = new Settings();
+                    st.main(inp, id);
                     break;
                 case 6:
                     break;
