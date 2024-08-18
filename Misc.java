@@ -1,10 +1,4 @@
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Scanner;
-import java.time.LocalDate;
 import java.time.LocalTime;
 
 class UserDeleted extends Exception {
@@ -16,6 +10,7 @@ class Misc {
     public static final String ANSI_RED = "\u001B[31m";
     public static final String ANSI_GREEN = "\u001B[32m";
     public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_GRAY = "\u001B[90m";
 
     public static void cls() {
         try {
@@ -61,15 +56,6 @@ class Misc {
         return color + res + "\u001B[0m";
     }
 
-    public static Timestamp convert(String date) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-
-        Date parsedDate = sdf.parse(date);
-        Timestamp timestamp = new Timestamp(parsedDate.getTime());
-        return timestamp;
-
-    }
-
     public static void welcome() {
         System.out.println(ANSI_GREEN + "__          __  ______   _         _____    ____    __  __   ______ \r\n" + //
                 " \\ \\        / / |  ____| | |       / ____|  / __ \\  |  \\/  | |  ____|\r\n" + //
@@ -92,7 +78,7 @@ class Misc {
         return n;
     }
 
-    public static boolean checkDateIsInBetween(LocalTime input, LocalTime start, LocalTime end) {
+    public static boolean checkTimeIsInBetween(LocalTime input, LocalTime start, LocalTime end) {
         return input.isAfter(start) && input.isBefore(end);
     }
 }
