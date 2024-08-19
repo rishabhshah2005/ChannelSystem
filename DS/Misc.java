@@ -1,11 +1,10 @@
+package DS;
+
 import java.util.Scanner;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
-class UserDeleted extends Exception {
-}
-
-class Misc {
+public class Misc {
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_YELLOW = "\u001B[33m";
     public static final String ANSI_RED = "\u001B[31m";
@@ -91,20 +90,9 @@ class Misc {
     }
 
     // public static void main(String[] args) {
-    //     LocalTime t = LocalTime.now();
-    //     System.out.println(printTime(t));
+    // LocalTime t = LocalTime.now();
+    // System.out.println(printTime(t));
     // }
 }
 
-class PlayQue {
-    String channel_name, prog_name;
-    LocalTime start, end;
 
-    public PlayQue(String channel_name, String prog_name, LocalTime start, LocalTime end) {
-        this.channel_name = channel_name;
-        this.prog_name = prog_name;
-        this.start = start;
-        this.end = end;
-    }
-
-}

@@ -1,6 +1,8 @@
 import java.sql.SQLException;
 import java.util.Scanner;
 
+import DS.Misc;
+
 public class Settings {
     void printMenu() {
         System.out.println("1) View Current data \n2) Change Username \n3) Change Password");

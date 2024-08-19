@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 import DS.LinkedListPrac;
+import DS.Misc;
+import DS.PlayQue;
 
 public class SQLQueries {
   String dburl = "jdbc:mysql://localhost:3306/tvms";
