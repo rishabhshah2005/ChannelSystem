@@ -1,5 +1,10 @@
 ***********************************************TABLES IN TV SYSTEM*********************************************************
 
+view(playque): select channel.channel_id, channel.channel_name, program_routine.program_name, time_slot.start_time, time_slot.end_time
+	  from program_routine natural join channel natural join time_slot
+
+view(currently_playing) = SELECT * from playque where CURRENT_TIME()>=start_time and end_time>=CURRENT_TIME();
+
 Channels: chann_id(pk), chann_name, type, language, isHD
 
 program_routine: chann_id(pk), time_slot_id(pk), program_name

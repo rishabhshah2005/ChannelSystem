@@ -1,10 +1,14 @@
 import java.sql.Statement;
+import java.time.LocalTime;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
+import DS.LinkedListPrac;
+import DS.Misc;
+import DS.PlayQue;
 
 public class SQLQueries {
   String dburl = "jdbc:mysql://localhost:3306/tvms";
@@ -16,6 +20,51 @@ public class SQLQueries {
   SQLQueries() throws ClassNotFoundException, SQLException {
     Class.forName("com.mysql.cj.jdbc.Driver");
     con = DriverManager.getConnection(dburl, dbuser, dbpass);
+  }
+
+  public void getPackage(int id, LinkedListPrac<Integer> ll_pack) throws SQLException {
+    String sql = "select package_id from user where user_id=" + id;
+    PreparedStatement pst = con.prepareStatement(sql);
+    ResultSet rs = pst.executeQuery();
+    rs.next();
+    int p_id = rs.getInt(1);
+    switch (p_id) {
+      case 1:
+        sql = "select * from free_channel";
+        pst = con.prepareStatement(sql);
+        rs = pst.executeQuery();
+        while (rs.next()) {
+          ll_pack.addLast(rs.getInt(1));
+        }
+        break;
+      case 2:
+        sql = "select channel_id from channel where is_hd=true";
+        pst = con.prepareStatement(sql);
+        rs = pst.executeQuery();
+        while (rs.next()) {
+          ll_pack.addLast(rs.getInt(1));
+        }
+        break;
+      case 3:
+        sql = "select channel_id from channel where is_hd=false";
+        pst = con.prepareStatement(sql);
+        rs = pst.executeQuery();
+        while (rs.next()) {
+          ll_pack.addLast(rs.getInt(1));
+        }
+        break;
+      case 4:
+        sql = "select channel_id from channel";
+        pst = con.prepareStatement(sql);
+        rs = pst.executeQuery();
+        while (rs.next()) {
+          ll_pack.addLast(rs.getInt(1));
+        }
+        break;
+
+      default:
+        break;
+    }
   }
 
   int checkUsernamePass(String user, String pass) throws SQLException {
@@ -138,6 +187,65 @@ public class SQLQueries {
     } else {
       System.out.println("Invalid userid and password");
     }
+  }
+
+  public LinkedListPrac<PlayQue> displayAllChannels(LinkedListPrac<Integer> ll_pack) throws SQLException {
+    LinkedListPrac<PlayQue> res = new LinkedListPrac<>() {
+      public void display() {
+        Node temp = head;
+        Node start = head;
+        int cnt = 0;
+        while (temp != null) {
+          if (cnt % 10 == 0) {
+            start = temp;
+          }
+          if (temp == current) {
+            break;
+          }
+          cnt++;
+          temp = temp.next;
+        }
+        cnt = 0;
+        while (cnt != 10 && start != null) {
+          if (start == current) {
+            System.out.println(start.val.channel_name);
+          } else {
+            System.out.println(Misc.ANSI_GRAY + start.val.channel_name +
+                Misc.ANSI_RESET);
+          }
+          start = start.next;
+          cnt++;
+        }
+
+        System.out.println();
+        String[] headings = { "StartTime", "EndTime" };
+        String[] headings2 = { "Current" };
+        System.out.println(
+            Misc.padAllRight(headings2, 40, Misc.ANSI_YELLOW) + Misc.padAllRight(headings, 20, Misc.ANSI_YELLOW));
+        String[] play = { Misc.printTime(current.val.start),
+            Misc.printTime(current.val.end) };
+        String[] play2 = { current.val.prog_name };
+        System.out.println(Misc.padAllRight(play2, 40) + Misc.padAllRight(play, 20));
+
+      }
+    };
+
+    String sql = "select * from currently_playing order by channel_id";
+    PreparedStatement pst = con.prepareStatement(sql);
+    ResultSet rs = pst.executeQuery();
+
+    while (rs.next()) {
+      if (ll_pack.contains(rs.getInt(1))) {
+        String chann = rs.getString(2);
+        String prog = rs.getString(3);
+        LocalTime start = rs.getTime(4).toLocalTime();
+        LocalTime end = rs.getTime(5).toLocalTime();
+        PlayQue pq = new PlayQue(chann, prog, start, end);
+        res.addLast(pq);
+      }
+    }
+
+    return res;
   }
 
 }
