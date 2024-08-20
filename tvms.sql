@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 20, 2024 at 11:58 AM
+-- Generation Time: Aug 20, 2024 at 12:05 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -1321,7 +1321,9 @@ INSERT INTO `program_routine` (`program_id`, `channel_id`, `time_slot_id`, `prog
 CREATE TABLE `record_shows` (
   `record_id` int(11) NOT NULL,
   `programe_name` varchar(50) NOT NULL,
-  `time_slot_id` int(11) NOT NULL
+  `channel_id` int(11) NOT NULL,
+  `time_slot_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
