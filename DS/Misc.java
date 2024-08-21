@@ -21,23 +21,6 @@ public class Misc {
         }
     }
 
-    public static String leftPadding(String input, char ch, int L) {
-
-        String result = String.format("%" + L + "s", input).replace(' ', ch);
-
-        // Return the resultant string
-        return result;
-    }
-
-    // Function to perform right padding
-    public static String rightPadding(String input, char ch, int L) {
-
-        String result = String.format("%" + (-L) + "s", input).replace(' ', ch);
-
-        // Return the resultant string
-        return result;
-    }
-
     public static String padAllRight(String[] arr, int L) {
         String res = "";
         for (String string : arr) {

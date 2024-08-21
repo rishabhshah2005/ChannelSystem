@@ -190,46 +190,8 @@ public class SQLQueries {
   }
 
   public LinkedListPrac<PlayQue> displayAllChannels(LinkedListPrac<Integer> ll_pack) throws SQLException {
-    LinkedListPrac<PlayQue> res = new LinkedListPrac<>() {
-      public void display() {
-        Node temp = head;
-        Node start = head;
-        int cnt = 0;
-        while (temp != null) {
-          if (cnt % 10 == 0) {
-            start = temp;
-          }
-          if (temp == current) {
-            break;
-          }
-          cnt++;
-          temp = temp.next;
-        }
-        cnt = 0;
-        while (cnt != 10 && start != null) {
-          if (start == current) {
-            System.out.println(start.val.channel_name);
-          } else {
-            System.out.println(Misc.ANSI_GRAY + start.val.channel_name +
-                Misc.ANSI_RESET);
-          }
-          start = start.next;
-          cnt++;
-        }
-
-        System.out.println();
-        String[] headings = { "StartTime", "EndTime" };
-        String[] headings2 = { "Current" };
-        System.out.println(
-            Misc.padAllRight(headings2, 40, Misc.ANSI_YELLOW) + Misc.padAllRight(headings, 20, Misc.ANSI_YELLOW));
-        String[] play = { Misc.printTime(current.val.start),
-            Misc.printTime(current.val.end) };
-        String[] play2 = { current.val.prog_name };
-        System.out.println(Misc.padAllRight(play2, 40) + Misc.padAllRight(play, 20));
-
-      }
-    };
-
+    LinkedListPrac<PlayQue> res = new LinkedListPrac<>();
+    
     String sql = "select * from currently_playing order by channel_id";
     PreparedStatement pst = con.prepareStatement(sql);
     ResultSet rs = pst.executeQuery();
