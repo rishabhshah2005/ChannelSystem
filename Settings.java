@@ -13,7 +13,9 @@ public class Settings {
         SQLQueries sq = new SQLQueries();
 
         int index = 0;
+        Misc.cls();
         while (index != 4) {
+
             printMenu();
             index = Misc.checkInt(inp, "Enter index: ");
             switch (index) {
@@ -34,6 +36,7 @@ public class Settings {
                     sq.changeUserpassword(inp);
                     break;
                 case 4:
+                    Misc.cls();
                     break;
                 default:
                     System.out.println("Enter correct index: ");
@@ -42,29 +45,4 @@ public class Settings {
         }
     }
 
-    // public static void main(String[] args) throws Exception {
-    // Scanner sc = new Scanner(System.in);
-
-    // System.out.print("Enter from below choices");
-    // System.out.println("1.View Current data \n 2.Change Username \n 3.Change
-    // Password");
-    // int ch = sc.nextInt();
-    // switch (ch) {
-    // case 1:
-    // sq.fetchcurrentSettings();
-    // break;
-
-    // case 2:
-    // sq.changeUsername();
-    // break;
-
-    // case 3:
-    // sq.changeUserpassword();
-    // break;
-
-    // default:
-    // break;
-    // }
-    // sq.changeUserpassword();
-    // }
 }
