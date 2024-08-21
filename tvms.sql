@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 18, 2024 at 07:19 PM
+-- Generation Time: Aug 20, 2024 at 12:05 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -126,72 +126,6 @@ INSERT INTO `free_channel` (`free_channel_id`) VALUES
 (46),
 (47),
 (48);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `hd_channel`
---
-
-CREATE TABLE `hd_channel` (
-  `hd_channel_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `hd_channel`
---
-
-INSERT INTO `hd_channel` (`hd_channel_id`) VALUES
-(1),
-(2),
-(3),
-(4),
-(5),
-(6),
-(7),
-(8),
-(9),
-(10),
-(11),
-(12),
-(13),
-(14),
-(15),
-(16),
-(17),
-(18),
-(19),
-(20),
-(21),
-(22),
-(23),
-(24),
-(25),
-(26),
-(27),
-(28),
-(29),
-(30),
-(31),
-(32),
-(33),
-(34),
-(35),
-(36),
-(37),
-(38),
-(39),
-(40);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `normal_channel`
---
-
-CREATE TABLE `normal_channel` (
-  `noraml_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1387,7 +1321,9 @@ INSERT INTO `program_routine` (`program_id`, `channel_id`, `time_slot_id`, `prog
 CREATE TABLE `record_shows` (
   `record_id` int(11) NOT NULL,
   `programe_name` varchar(50) NOT NULL,
-  `time_slot_id` int(11) NOT NULL
+  `channel_id` int(11) NOT NULL,
+  `time_slot_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -1450,9 +1386,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `username`, `password`, `package_id`) VALUES
-(1, 'rishabh', 'rishabh', 1),
+(1, 'rishabh', 'rishabh', 2),
 (4, 'admin', 'root', 1),
-(5, 'k@1234', '1234', 1);
+(5, 'k@1234', '1234', 3);
 
 -- --------------------------------------------------------
 
@@ -1487,18 +1423,6 @@ ALTER TABLE `channel`
 --
 ALTER TABLE `free_channel`
   ADD PRIMARY KEY (`free_channel_id`);
-
---
--- Indexes for table `hd_channel`
---
-ALTER TABLE `hd_channel`
-  ADD PRIMARY KEY (`hd_channel_id`);
-
---
--- Indexes for table `normal_channel`
---
-ALTER TABLE `normal_channel`
-  ADD PRIMARY KEY (`noraml_id`);
 
 --
 -- Indexes for table `program_routine`
@@ -1540,18 +1464,6 @@ ALTER TABLE `channel`
 --
 ALTER TABLE `free_channel`
   MODIFY `free_channel_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
-
---
--- AUTO_INCREMENT for table `hd_channel`
---
-ALTER TABLE `hd_channel`
-  MODIFY `hd_channel_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
-
---
--- AUTO_INCREMENT for table `normal_channel`
---
-ALTER TABLE `normal_channel`
-  MODIFY `noraml_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `program_routine`

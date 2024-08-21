@@ -37,6 +37,7 @@ public class SQLQueries {
           ll_pack.addLast(rs.getInt(1));
         }
         break;
+
       case 2:
         sql = "select channel_id from channel where is_hd=true";
         pst = con.prepareStatement(sql);
@@ -45,6 +46,7 @@ public class SQLQueries {
           ll_pack.addLast(rs.getInt(1));
         }
         break;
+
       case 3:
         sql = "select channel_id from channel where is_hd=false";
         pst = con.prepareStatement(sql);
@@ -53,6 +55,7 @@ public class SQLQueries {
           ll_pack.addLast(rs.getInt(1));
         }
         break;
+
       case 4:
         sql = "select channel_id from channel";
         pst = con.prepareStatement(sql);
@@ -115,7 +118,7 @@ public class SQLQueries {
     ResultSet rs = pst.executeQuery();
     while (rs.next()) {
       System.out.println("User ID  = " + rs.getInt(1) + " ");
-      System.out.println("UserName =" + rs.getString(2) + " ");
+      System.out.println("UserName = " + rs.getString(2) + " ");
       System.out.println("UserPassword = " + rs.getString(3) + " ");
       System.out.println("Package Id = " + rs.getString(4) + " ");
     }
@@ -248,4 +251,99 @@ public class SQLQueries {
     return res;
   }
 
+  public void changeUserPack(Scanner sc, int id) throws SQLException {
+    Statement st = con.createStatement();
+
+    System.out.println("1) change to free Channels.");
+    System.out.println("2) change to HD Channels.");
+    System.out.println("3) change to Normal Channels.");
+    System.out.println("4) change to All Channels.");
+    System.out.println();
+    System.out.println("Enter your choice.");
+    int ch = sc.nextInt();
+
+    switch (ch) {
+
+      case 1:
+        String sql = "update user set package_id = 1 where user_id = " + id;
+        int h = st.executeUpdate(sql);
+        if (h > 0) {
+          System.out.println("Update success");
+        } else {
+          System.out.println("Update failed");
+        }
+        break;
+
+      case 2:
+        String sql1 = "update user set package_id = 2 where user_id = " + id;
+        int i = st.executeUpdate(sql1);
+        if (i > 0) {
+          System.out.println("Update success");
+        } else {
+          System.out.println("Update failed");
+        }
+        break;
+
+      case 3:
+        String sql2 = "update user set package_id = 3 where user_id = " + id;
+        int j = st.executeUpdate(sql2);
+        if (j > 0) {
+          System.out.println("Update success");
+        } else {
+          System.out.println("Update failed");
+        }
+        break;
+
+      case 4:
+        String sql3 = "update user set package_id = 4 where user_id = " + id;
+        int k = st.executeUpdate(sql3);
+        if (k > 0) {
+          System.out.println("Update success");
+        } else {
+          System.out.println("Update failed");
+        }
+        break;
+
+      default:
+        break;
+    }
+
+  }
+
+  public void updateChannel(Scanner sc) throws SQLException {
+
+    System.out.print("Enter old Channel name to update: ");
+    sc.nextLine();
+    String c_name = sc.nextLine();
+
+    System.out.print("Enter new Channel name: ");
+    String c_new_name = sc.nextLine();
+    System.out.println("New name " + c_new_name);
+
+    // String sql = "update user set password = '" + newpass + "' where user_id = "
+    // + pid;
+
+    String sql1 = "update channel set channel_name = '" + c_new_name + "' where channel_name = '" + c_name + "'";
+    PreparedStatement pst = con.prepareStatement(sql1);
+    // pst.setString(1, c_new_name);
+    // pst.setString(2, c_name);
+
+    pst.execute();
+
+    String c_hd_name = c_name + "HD";
+    String c_hd_new_name = c_new_name + "HD";
+    String sql2 = "update channel set channel_name = '" + c_hd_new_name + "' where channel_name = '" + c_hd_name
+        + "'";
+    pst = con.prepareStatement(sql2);
+    // pst.setString(1, c_hd_new_name);
+    // pst.setString(2, c_hd_name);
+
+    int j = pst.executeUpdate(sql2);
+    if (j > 0) {
+      System.out.println("Update success");
+    } else {
+      System.out.println("Update failed");
+    }
+
+  }
 }

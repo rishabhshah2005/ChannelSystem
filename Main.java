@@ -1,5 +1,5 @@
-import java.sql.SQLException;
 import java.util.Scanner;
+import java.sql.SQLException;
 
 import DS.Misc;
 
@@ -27,6 +27,7 @@ public class Main {
 
             switch (index) {
                 case 1:
+
                     System.out.print("Enter username: ");
                     inp.nextLine();
                     String user = inp.nextLine();
@@ -40,6 +41,8 @@ public class Main {
                         if (user.equals("admin")) {
                             System.out.println(Misc.ANSI_YELLOW + "ADMIN LOGIN SUCCESSFUL!!!" + Misc.ANSI_RESET);
                             // If user is admin then a special class has to run
+                            AdminLogin ad = new AdminLogin(current_user_id, quer);
+                            ad.main(inp, current_user_id);
                         } else {
                             // Whatever classes are supposed to run after login is successfull go below
                             Home h = new Home(current_user_id, quer);
@@ -47,17 +50,21 @@ public class Main {
                         }
                     }
                     break;
+
                 case 2:
+
                     inp.nextLine();
                     Misc.cls();
                     quer.createUser(inp);
                     break;
 
                 case 3:
+
                     quer.con.close();
                     break;
 
                 default:
+
                     System.out.println("Enter correct index!!");
                     break;
             }
