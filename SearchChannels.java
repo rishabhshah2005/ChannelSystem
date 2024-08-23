@@ -144,7 +144,7 @@ public class SearchChannels {
                 System.out.println("Enter correct index");
                 return;
         }
-
+        Misc.cls();
         if (res.head == null) {
             System.out.println(Misc.ANSI_RED + "No Channel Found" + Misc.ANSI_RESET);
         } else {
@@ -192,6 +192,15 @@ public class SearchChannels {
                     break;
                 case 5:
                     Misc.cls();
+                    if (result.head == null) {
+                        Misc.cls();
+                        System.out.println(Misc.ANSI_RED + "QUEUE IS EMPTY" + Misc.ANSI_RESET);
+                        System.out.println("Press enter to exit");
+                        inp.nextLine();
+                        inp.nextLine();
+
+                        break;
+                    }
                     result.playTV(inp);
                     break;
                 case 6:
