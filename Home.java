@@ -1,5 +1,6 @@
 import java.sql.SQLException;
 import java.util.Scanner;
+
 import DS.LinkedListPrac;
 import DS.Misc;
 import DS.PlayQue;
@@ -26,7 +27,7 @@ public class Home {
     }
 
     public void displayAll(Scanner inp) throws SQLException {
-        curr_playing = quer.displayAllChannels(pack_chann);
+        curr_playing = quer.AllChannels(pack_chann);
         curr_playing.playTV(inp);
     }
 
@@ -44,8 +45,12 @@ public class Home {
                     curr_playing.playTV(inp);
                     break;
                 case 2:
+                    SearchChannels se = new SearchChannels(quer, pack_chann);
+                    curr_playing = se.main(inp);
                     break;
                 case 3:
+                    RecordShow rs = new RecordShow(inp, quer, id);
+                    rs.main();
                     break;
                 case 4:
                     displayAll(inp);
@@ -64,4 +69,5 @@ public class Home {
             }
         }
     }
+
 }

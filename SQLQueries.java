@@ -1,11 +1,12 @@
-import java.sql.Statement;
-import java.time.LocalTime;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalTime;
 import java.util.Scanner;
+
 import DS.LinkedListPrac;
 import DS.Misc;
 import DS.PlayQue;
@@ -31,6 +32,7 @@ public class SQLQueries {
     switch (p_id) {
       case 1:
         sql = "select * from free_channel";
+
         pst = con.prepareStatement(sql);
         rs = pst.executeQuery();
         while (rs.next()) {
@@ -192,20 +194,23 @@ public class SQLQueries {
     }
   }
 
-  public LinkedListPrac<PlayQue> displayAllChannels(LinkedListPrac<Integer> ll_pack) throws SQLException {
+  public LinkedListPrac<PlayQue> AllChannels(LinkedListPrac<Integer> ll_pack) throws SQLException {
     LinkedListPrac<PlayQue> res = new LinkedListPrac<>();
-    
+
     String sql = "select * from currently_playing order by channel_id";
     PreparedStatement pst = con.prepareStatement(sql);
     ResultSet rs = pst.executeQuery();
 
     while (rs.next()) {
       if (ll_pack.contains(rs.getInt(1))) {
+        int id = rs.getInt(1);
         String chann = rs.getString(2);
-        String prog = rs.getString(3);
-        LocalTime start = rs.getTime(4).toLocalTime();
-        LocalTime end = rs.getTime(5).toLocalTime();
-        PlayQue pq = new PlayQue(chann, prog, start, end);
+        String type = rs.getString(3);
+        String lang = rs.getString(4);
+        String prog = rs.getString(5);
+        LocalTime start = rs.getTime(6).toLocalTime();
+        LocalTime end = rs.getTime(7).toLocalTime();
+        PlayQue pq = new PlayQue(id, chann, type, lang, prog, start, end);
         res.addLast(pq);
       }
     }
@@ -213,61 +218,31 @@ public class SQLQueries {
     return res;
   }
 
-  public void changeUserPack(Scanner sc, int id) throws SQLException {
-    Statement st = con.createStatement();
+  public void changeUserPack(Scanner sc, String username) throws SQLException {
 
     System.out.println("1) change to free Channels.");
     System.out.println("2) change to HD Channels.");
     System.out.println("3) change to Normal Channels.");
     System.out.println("4) change to All Channels.");
     System.out.println();
-    System.out.println("Enter your choice.");
-    int ch = sc.nextInt();
+    int ch = Misc.checkInt(sc, "Enter Index: ");
+    while (!(ch > 0 && ch < 5)) {
+      System.out.println("Enter correct index!!");
+      ch = Misc.checkInt(sc, "Enter Index: ");
+    }
 
-    switch (ch) {
+    String sql = "update user set package_id = ? where username = ?";
+    PreparedStatement pst = con.prepareStatement(sql);
+    pst.setInt(1, ch);
+    pst.setString(2, username);
 
-      case 1:
-        String sql = "update user set package_id = 1 where user_id = " + id;
-        int h = st.executeUpdate(sql);
-        if (h > 0) {
-          System.out.println("Update success");
-        } else {
-          System.out.println("Update failed");
-        }
-        break;
-
-      case 2:
-        String sql1 = "update user set package_id = 2 where user_id = " + id;
-        int i = st.executeUpdate(sql1);
-        if (i > 0) {
-          System.out.println("Update success");
-        } else {
-          System.out.println("Update failed");
-        }
-        break;
-
-      case 3:
-        String sql2 = "update user set package_id = 3 where user_id = " + id;
-        int j = st.executeUpdate(sql2);
-        if (j > 0) {
-          System.out.println("Update success");
-        } else {
-          System.out.println("Update failed");
-        }
-        break;
-
-      case 4:
-        String sql3 = "update user set package_id = 4 where user_id = " + id;
-        int k = st.executeUpdate(sql3);
-        if (k > 0) {
-          System.out.println("Update success");
-        } else {
-          System.out.println("Update failed");
-        }
-        break;
-
-      default:
-        break;
+    int h = pst.executeUpdate();
+    if (h > 0) {
+      Misc.cls();
+      System.out.println(Misc.ANSI_GREEN + "Update successful" + Misc.ANSI_RESET);
+    } else {
+      Misc.cls();
+      System.out.println(Misc.ANSI_RED + "User not found" + Misc.ANSI_RESET);
     }
 
   }
@@ -275,20 +250,14 @@ public class SQLQueries {
   public void updateChannel(Scanner sc) throws SQLException {
 
     System.out.print("Enter old Channel name to update: ");
-    sc.nextLine();
     String c_name = sc.nextLine();
 
     System.out.print("Enter new Channel name: ");
     String c_new_name = sc.nextLine();
     System.out.println("New name " + c_new_name);
 
-    // String sql = "update user set password = '" + newpass + "' where user_id = "
-    // + pid;
-
     String sql1 = "update channel set channel_name = '" + c_new_name + "' where channel_name = '" + c_name + "'";
     PreparedStatement pst = con.prepareStatement(sql1);
-    // pst.setString(1, c_new_name);
-    // pst.setString(2, c_name);
 
     pst.execute();
 
@@ -297,15 +266,187 @@ public class SQLQueries {
     String sql2 = "update channel set channel_name = '" + c_hd_new_name + "' where channel_name = '" + c_hd_name
         + "'";
     pst = con.prepareStatement(sql2);
-    // pst.setString(1, c_hd_new_name);
-    // pst.setString(2, c_hd_name);
 
     int j = pst.executeUpdate(sql2);
     if (j > 0) {
+      Misc.cls();
       System.out.println("Update success");
     } else {
+      Misc.cls();
       System.out.println("Update failed");
     }
 
   }
+
+  public void record(int user_id, Scanner sc, int channel_no) throws SQLException {
+
+    while (true) {
+      @SuppressWarnings("unused")
+      int timeid = 0;
+      int check = 0;
+      String heading[] = { "Channel ID", "Progam ID ", "Program Name", "Time" };
+
+      String record = "select package_id from user where user_id=" + user_id;
+      PreparedStatement pst = con.prepareStatement(record);
+      ResultSet rs = pst.executeQuery();
+      rs.next();
+      int p_id = rs.getInt(1);
+      switch (p_id) {
+        case 1:
+          record = "select * from program_routine join time_slot on program_routine.time_slot_id=time_slot.time_slot_id where channel_id In(select free_channel_id from free_channel where free_channel_id=?) ";
+          pst = con.prepareStatement(record);
+          pst.setInt(1, channel_no);
+
+          rs = pst.executeQuery();
+
+          System.out.println(Misc.padAllRight(heading, 27));
+          while (rs.next()) {
+
+            timeid = rs.getInt("time_slot_id");
+            String time = Misc.printTime(rs.getTime("start_time").toLocalTime()) + "-"
+                + Misc.printTime(rs.getTime("end_time").toLocalTime());
+            String arr[] = { Integer.toString(rs.getInt("channel_id")), Integer.toString(rs.getInt("program_id")),
+                rs.getString("program_name"), time };
+
+            System.out.println(Misc.padAllRight(arr, 27));
+            check = 1;
+          }
+
+          break;
+
+        case 2:
+          record = "select * from program_routine join time_slot on program_routine.time_slot_id=time_slot.time_slot_id where channel_id In(select channel_id from channel where is_hd=true and channel_id=? )";
+          pst = con.prepareStatement(record);
+          pst.setInt(1, channel_no);
+
+          rs = pst.executeQuery();
+
+          System.out.println(Misc.padAllRight(heading, 27));
+          while (rs.next()) {
+
+            timeid = rs.getInt("time_slot_id");
+            String time = Misc.printTime(rs.getTime("start_time").toLocalTime()) + "-"
+                + Misc.printTime(rs.getTime("end_time").toLocalTime());
+            String arr[] = { Integer.toString(rs.getInt("channel_id")), Integer.toString(rs.getInt("program_id")),
+                rs.getString("program_name"), time };
+
+            System.out.println(Misc.padAllRight(arr, 27));
+            check = 1;
+
+          }
+          break;
+
+        case 3:
+          record = "select * from program_routine join time_slot on program_routine.time_slot_id=time_slot.time_slot_id where channel_id In(select channel_id from channel where is_hd=false and channel_id=?)";
+          pst = con.prepareStatement(record);
+          pst.setInt(1, channel_no);
+          rs = pst.executeQuery();
+          System.out.println(Misc.padAllRight(heading, 35));
+          while (rs.next()) {
+
+            timeid = rs.getInt("time_slot_id");
+            String time = Misc.printTime(rs.getTime("start_time").toLocalTime()) + "-"
+                + Misc.printTime(rs.getTime("end_time").toLocalTime());
+            String arr[] = { Integer.toString(rs.getInt("channel_id")), Integer.toString(rs.getInt("program_id")),
+                rs.getString("program_name"), time };
+
+            System.out.println(Misc.padAllRight(arr, 27));
+            check = 1;
+          }
+          break;
+
+        case 4:
+          record = "select * from program_routine join time_slot on program_routine.time_slot_id=time_slot.time_slot_id where channel_id In(select channel_id from channel where channel_id=?)";
+          pst = con.prepareStatement(record);
+          pst.setInt(1, channel_no);
+
+          rs = pst.executeQuery();
+          System.out.println(Misc.padAllRight(heading, 27));
+          while (rs.next()) {
+
+            timeid = rs.getInt("time_slot_id");
+            String time = Misc.printTime(rs.getTime("start_time").toLocalTime()) + "-"
+                + Misc.printTime(rs.getTime("end_time").toLocalTime());
+            String arr[] = { Integer.toString(rs.getInt("channel_id")), Integer.toString(rs.getInt("program_id")),
+                rs.getString("program_name"), time };
+
+            System.out.println(Misc.padAllRight(arr, 27));
+            check = 1;
+          }
+          break;
+
+        default:
+          break;
+      }
+
+      if (check != 1) {
+        System.out.println("This channel is not available in your package!");
+      } else {
+        System.out.print("Enter Program ID  you want to record : ");
+        int prg_id = sc.nextInt();
+        recordProgram(prg_id, user_id);
+      }
+      break;
+    }
+  }
+
+  void recordProgram(int program_id, int user_id) throws SQLException {
+    int prg_id = program_id;
+    int channel_Id = 0;
+    int timeid = 0;
+    String prog_name = "";
+    String selectprogram = "select * from program_routine where program_id=? ";
+    PreparedStatement pst = con.prepareStatement(selectprogram);
+    pst.setInt(1, prg_id);
+    ResultSet rs = pst.executeQuery();
+    while (rs.next()) {
+      prog_name = rs.getString("program_name");
+
+      channel_Id = rs.getInt("channel_id");
+      timeid = rs.getInt("time_slot_id");
+    }
+
+    String insertRecord = "insert into record_shows (programe_name,channel_id,time_slot_id,user_id) values(? , ? , ? , ? )";
+
+    pst = con.prepareStatement(insertRecord);
+    pst.setString(1, prog_name);
+    pst.setInt(2, channel_Id);
+    pst.setInt(3, timeid);
+    pst.setInt(4, user_id);
+    int result = pst.executeUpdate();
+    System.out.println((result > 0) ? "Recording Done Successfull!" : "Recording Failed!");
+
+  }
+
+  void viewMyrecording(int uid) throws SQLException {
+    int check = 0;
+    String view = "select * from record_shows join time_slot on record_shows.time_slot_id= time_slot.time_slot_id where user_id=?";
+    PreparedStatement pst = con.prepareStatement(view);
+    pst.setInt(1, uid);
+    ResultSet rs = pst.executeQuery();
+    String heading[] = { "Recording ID", "Channel ID", "Program Name", "Time" };
+    System.out.println(Misc.padAllRight(heading, 35, Misc.ANSI_YELLOW));
+    while (rs.next()) {
+
+      String time = Misc.printTime(rs.getTime("start_time").toLocalTime()) + "-"
+          + Misc.printTime(rs.getTime("end_time").toLocalTime());
+      String arr[] = { Integer.toString(rs.getInt("record_id")), Integer.toString(rs.getInt("channel_id")),
+          rs.getString("programe_name"), time };
+      System.out.println(Misc.padAllRight(arr, 35));
+      check = 1;
+    }
+    System.out.println((check != 1) ? "No recordings Available!" : "");
+
+  }
+
+  void deleteRecordById(int record_id, int user_id) throws SQLException {
+    String deleteRecord = "delete from record_shows where record_id=? and user_id=?";
+    PreparedStatement pst = con.prepareStatement(deleteRecord);
+    pst.setInt(1, record_id);
+    pst.setInt(2, user_id);
+    int rs = pst.executeUpdate();
+    System.out.println((rs > 0) ? "You Have Successfully Deleted Recording !"
+        : "There is no Recording with RecordingID! " + record_id);
+  }
+
 }

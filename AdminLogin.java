@@ -24,6 +24,7 @@ public class AdminLogin {
 
     public void main(Scanner inp, int id) throws SQLException, ClassNotFoundException {
         Misc.cls();
+        System.out.println(Misc.ANSI_YELLOW + "ADMIN LOGIN SUCCESSFUL!!!" + Misc.ANSI_RESET);
         int index = 0;
         while (index != 3) {
             printMenu();
@@ -33,14 +34,15 @@ public class AdminLogin {
 
                 case 1:
                     Misc.cls();
-                    System.out.println("Enter user id to change user pack");
-                    int u_id = inp.nextInt();
                     inp.nextLine();
-                    sq.changeUserPack(inp, u_id);
+                    System.out.print("Enter username to change user pack: ");
+                    String username = inp.nextLine();
+                    sq.changeUserPack(inp, username);
                     break;
 
                 case 2:
                     Misc.cls();
+                    inp.nextLine();
                     sq.updateChannel(inp);
                     break;
 

@@ -106,13 +106,15 @@ public class LinkedListPrac<T> {
             temp = temp.next;
         }
         cnt = 0;
+        String[] heading = { "Channel Number", "Channel Name", "Type", "Language" };
+        System.out.println(Misc.padAllRight(heading, 25, Misc.ANSI_YELLOW));
         while (cnt != 10 && start != null) {
-
+            String[] ans = { ((PlayQue) start.val).id + "", ((PlayQue) start.val).channel_name,
+                    ((PlayQue) start.val).type, ((PlayQue) start.val).lang };
             if (start == current) {
-                System.out.println(((PlayQue) start.val).channel_name);
+                System.out.println(Misc.padAllRight(ans, 25));
             } else {
-                System.out.println(Misc.ANSI_GRAY + ((PlayQue) start.val).channel_name +
-                        Misc.ANSI_RESET);
+                System.out.println(Misc.padAllRight(ans, 25, Misc.ANSI_GRAY));
             }
             start = start.next;
             cnt++;
@@ -166,4 +168,97 @@ public class LinkedListPrac<T> {
             }
         }
     }
+
+    public void addAll(LinkedListPrac<T> ll_new) {
+        Node new_temp = ll_new.head;
+        if (ll_new.head == null) {
+            return;
+        }
+        if (head == null) {
+            addLast(new_temp.val);
+            while (new_temp.next != null) {
+                Node new_temp2 = new_temp.next;
+                new_temp = new_temp.next;
+                addLast(new_temp2.val);
+            }
+        } else {
+            addLast(new_temp.val);
+            while (new_temp.next != null) {
+                Node new_temp2 = new_temp.next;
+                new_temp = new_temp.next;
+                addLast(new_temp2.val);
+            }
+        }
+    }
+
+    public void printChannels() {
+        Node start = head;
+        if (head == null) {
+            System.out.println(Misc.ANSI_RED + "No channels available" + Misc.ANSI_RESET);
+            return;
+        }
+        String[] heading = { "Channel Number", "Channel Name", "Type", "Language" };
+
+        System.out.println(Misc.padAllRight(heading, 25, Misc.ANSI_YELLOW));
+        while (start != null) {
+            String[] ans = { ((PlayQue) start.val).id + "", ((PlayQue) start.val).channel_name,
+                    ((PlayQue) start.val).type, ((PlayQue) start.val).lang };
+            System.out.println(Misc.padAllRight(ans, 25));
+            start = start.next;
+        }
+    }
+
+    public void truncate() {
+        head = null;
+    }
+
+    public LinkedListPrac<PlayQue> searchByName(String name) {
+        Node temp = head;
+        LinkedListPrac<PlayQue> res = new LinkedListPrac<>();
+        while (temp != null) {
+            if (((PlayQue) temp.val).channel_name.toLowerCase().startsWith(name.toLowerCase())) {
+                res.addLast((PlayQue) temp.val);
+            }
+            temp = temp.next;
+        }
+        return res;
+    }
+
+    public LinkedListPrac<PlayQue> searchByID(int id) {
+        Node temp = head;
+        LinkedListPrac<PlayQue> res = new LinkedListPrac<>();
+        while (temp != null) {
+            if (((PlayQue) temp.val).id == id) {
+                res.addLast((PlayQue) temp.val);
+                break;
+            }
+            temp = temp.next;
+        }
+        return res;
+    }
+
+    public LinkedListPrac<PlayQue> searchByLang(String lang) {
+        Node temp = head;
+        LinkedListPrac<PlayQue> res = new LinkedListPrac<>();
+        while (temp != null) {
+            if (((PlayQue) temp.val).lang.equals(lang)) {
+                res.addLast((PlayQue) temp.val);
+            }
+            temp = temp.next;
+        }
+        return res;
+    }
+    
+    public LinkedListPrac<PlayQue> searchByType(String type) {
+        Node temp = head;
+        LinkedListPrac<PlayQue> res = new LinkedListPrac<>();
+        while (temp != null) {
+            if (((PlayQue) temp.val).type.equals(type)) {
+                res.addLast((PlayQue) temp.val);
+            }
+            temp = temp.next;
+        }
+        return res;
+    }
+
 }
