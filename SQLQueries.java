@@ -1,15 +1,10 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.Scanner;
 
-import DS.LinkedListPrac;
-import DS.Misc;
-import DS.PlayQue;
+import DS.*;
 
 public class SQLQueries {
   String dburl = "jdbc:mysql://localhost:3306/tvms";
@@ -465,11 +460,55 @@ public class SQLQueries {
     return found;
   }
 
-  public void insertRequest(String username, int new_id) throws SQLException{
+  public void insertRequest(String username, int new_id) throws SQLException {
     String sql = "insert into requests values(null,?,?,'pending',null)";
     PreparedStatement pst = con.prepareStatement(sql);
     pst.setString(1, username);
     pst.setInt(2, new_id);
+    pst.executeUpdate();
+  }
+
+  public LinkedListPrac<Req> getAllRequests() throws SQLException {
+    LinkedListPrac<Req> res = new LinkedListPrac<>();
+
+    String sql = "select * from requests order by req_time";
+    PreparedStatement pst = con.prepareStatement(sql);
+    ResultSet rs = pst.executeQuery();
+    while (rs.next()) {
+      String user = rs.getString(2);
+      int id = rs.getInt(3);
+      String stat = rs.getString(4);
+      Timestamp t = rs.getTimestamp(5);
+      LocalDateTime ldt = LocalDateTime.ofInstant(t.toInstant(), ZoneId.of("Asia/Kolkata"));
+      Req q = new Req(user, stat, id, ldt);
+      res.addLast(q);
+    }
+    return res;
+  }
+
+  public Que<Req> getPendingReqs() throws SQLException {
+    Que<Req> res = new Que<>();
+
+    String sql = "select * from requests where status='pending' order by req_time";
+    PreparedStatement pst = con.prepareStatement(sql);
+    ResultSet rs = pst.executeQuery();
+    while (rs.next()) {
+      String user = rs.getString(2);
+      int id = rs.getInt(3);
+      String stat = rs.getString(4);
+      Timestamp t = rs.getTimestamp(5);
+      LocalDateTime ldt = LocalDateTime.ofInstant(t.toInstant(), ZoneId.of("Asia/Kolkata"));
+      Req q = new Req(user, stat, id, ldt);
+      res.enque(q);
+    }
+    return res;
+  }
+
+  public void updateReq(String stat, String user) throws SQLException {
+    String sql = "update requests set status=? where username=? and status='pending'";
+    PreparedStatement pst = con.prepareStatement(sql);
+    pst.setString(1, stat);
+    pst.setString(2, user);
     pst.executeUpdate();
   }
 

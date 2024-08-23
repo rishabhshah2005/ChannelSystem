@@ -20,6 +20,10 @@ public class Settings {
         System.out.println("3) Normal Channels.");
         System.out.println("4) All Channels.");
         int new_id = Misc.checkInt(inp, "Enter the package you want to change to: ");
+        while (!(new_id>0 && new_id<5)) {
+            System.out.println("Enter correct index!!");
+            new_id = Misc.checkInt(inp, "Enter the package you want to change to: ");
+        }
 
         if (sq.checkRequest(user)) {
             Misc.cls();

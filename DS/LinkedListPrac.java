@@ -248,7 +248,7 @@ public class LinkedListPrac<T> {
         }
         return res;
     }
-    
+
     public LinkedListPrac<PlayQue> searchByType(String type) {
         Node temp = head;
         LinkedListPrac<PlayQue> res = new LinkedListPrac<>();
@@ -259,6 +259,22 @@ public class LinkedListPrac<T> {
             temp = temp.next;
         }
         return res;
+    }
+
+    public void displayReq() {
+        Node temp = head;
+        String[] heading = { "User", "Requested package", "Status", "TimeStamp" };
+        System.out.println(Misc.padAllRight(heading, 25, Misc.ANSI_YELLOW));
+        while (temp != null) {
+            int a = ((Req) temp.val).new_pack_id;
+            String pack = Misc.getPackageName(a);
+
+            String[] ans = { ((Req) temp.val).username, pack, ((Req) temp.val).status,
+                    Misc.printDateTime(((Req) temp.val).req_time) };
+            System.out.println(Misc.padAllRight(ans, 25));
+            temp = temp.next;
+        }
+        System.out.println();
     }
 
 }

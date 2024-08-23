@@ -36,6 +36,7 @@ public class RecordShow {
 
     public void main() throws SQLException {
         int index = 0;
+        Misc.cls();
         while (index != 4) {
 
             System.out.println("1) Record");

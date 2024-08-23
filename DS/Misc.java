@@ -1,6 +1,7 @@
 package DS;
 
 import java.util.Scanner;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
@@ -72,10 +73,35 @@ public class Misc {
 
     }
 
+    public static String printDateTime(LocalDateTime t) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/mm/yyyy hh:mm a");
+        String res = dtf.format(t).toUpperCase();
+        return res;
+    }
+
+    public static String getPackageName(int a) {
+        String pack = "";
+        switch (a) {
+            case 1:
+                pack = "Free channels";
+                break;
+            case 2:
+                pack = "HD Channel";
+                break;
+            case 3:
+                pack = "Normal channels";
+                break;
+            case 4:
+                pack = "All channels";
+                break;
+            default:
+                break;
+        }
+        return pack;
+    }
+
     // public static void main(String[] args) {
-    // LocalTime t = LocalTime.now();
-    // System.out.println(printTime(t));
+    // LocalDateTime t = LocalDateTime.now();
+    // System.out.println(printDateTime(t));
     // }
 }
-
-

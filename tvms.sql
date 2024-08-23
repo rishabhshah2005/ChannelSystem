@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 23, 2024 at 01:24 PM
+-- Generation Time: Aug 23, 2024 at 03:01 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -1336,9 +1336,10 @@ CREATE TABLE `record_shows` (
 
 INSERT INTO `record_shows` (`record_id`, `programe_name`, `channel_id`, `time_slot_id`, `user_id`) VALUES
 (2, 'Mahabharat', 2, 15, 1),
-(4, 'Anupama', 1, 18, 5),
 (6, 'Tmkoc', 3, 24, 1),
-(7, 'Ads', 33, 23, 1);
+(7, 'Ads', 33, 23, 1),
+(8, 'News Now', 22, 6, 1),
+(9, 'Story Of India', 42, 14, 5);
 
 -- --------------------------------------------------------
 
@@ -1359,7 +1360,26 @@ CREATE TABLE `requests` (
 --
 
 INSERT INTO `requests` (`req_id`, `username`, `new_pack_id`, `status`, `req_time`) VALUES
-(1, 'rishabh', 2, 'pending', '2024-08-23 11:22:56');
+(1, 'rishabh', 2, 'accepted', '2024-08-23 11:22:56'),
+(2, 'rishabh', 2, 'accepted', '2024-08-23 12:45:07'),
+(3, 'rishabh', 4, 'accepted', '2024-08-23 12:46:16'),
+(4, 'k@1234', 1, 'rejected', '2024-08-23 12:46:45'),
+(5, 'rishabh', 3, 'rejected', '2024-08-23 12:49:13'),
+(6, 'k@1234', 2, 'accepted', '2024-08-23 12:49:59'),
+(7, 'rishabh', 3, 'rejected', '2024-08-23 12:53:01'),
+(8, 'rishabh', 2, 'accepted', '2024-08-23 12:56:04');
+
+--
+-- Triggers `requests`
+--
+DELIMITER $$
+CREATE TRIGGER `updatePackage` AFTER UPDATE ON `requests` FOR EACH ROW BEGIN
+IF NEW.status = 'accepted' THEN
+UPDATE user set package_id=NEW.new_pack_id where username=NEW.username;
+end if;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -1421,9 +1441,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `username`, `password`, `package_id`) VALUES
-(1, 'rishabh', 'rishabh', 4),
+(1, 'rishabh', 'rishabh', 2),
 (4, 'admin', 'root', 1),
-(5, 'k@1234', '1234', 3);
+(5, 'k@1234', '1234', 2);
 
 -- --------------------------------------------------------
 
@@ -1516,13 +1536,13 @@ ALTER TABLE `program_routine`
 -- AUTO_INCREMENT for table `record_shows`
 --
 ALTER TABLE `record_shows`
-  MODIFY `record_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `record_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `requests`
 --
 ALTER TABLE `requests`
-  MODIFY `req_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `req_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `time_slot`
