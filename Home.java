@@ -10,10 +10,12 @@ public class Home {
     LinkedListPrac<Integer> pack_chann = new LinkedListPrac<>();
     SQLQueries quer;
     int id;
+    String user;
 
-    public Home(int id, SQLQueries quer) throws SQLException, ClassNotFoundException {
+    public Home(int id, SQLQueries quer, String user) throws SQLException, ClassNotFoundException {
         this.quer = quer;
         this.id = id;
+        this.user = user;
         quer.getPackage(id, pack_chann);
     }
 
@@ -56,8 +58,8 @@ public class Home {
                     displayAll(inp);
                     break;
                 case 5:
-                    Settings st = new Settings();
-                    st.main(inp, id);
+                    Settings st = new Settings(user, id, quer);
+                    st.main(inp);
                     break;
                 case 6:
                     Misc.cls();

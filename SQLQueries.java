@@ -449,4 +449,28 @@ public class SQLQueries {
         : "There is no Recording with RecordingID! " + record_id);
   }
 
+  public boolean checkRequest(String username) throws SQLException {
+    boolean found = false;
+    String sql = "select * from requests where username = ?";
+    PreparedStatement pst = con.prepareStatement(sql);
+    pst.setString(1, username);
+    ResultSet rs = pst.executeQuery();
+    while (rs.next()) {
+      String stat = rs.getString("status");
+      if (stat.equals("pending")) {
+        found = true;
+        break;
+      }
+    }
+    return found;
+  }
+
+  public void insertRequest(String username, int new_id) throws SQLException{
+    String sql = "insert into requests values(null,?,?,'pending',null)";
+    PreparedStatement pst = con.prepareStatement(sql);
+    pst.setString(1, username);
+    pst.setInt(2, new_id);
+    pst.executeUpdate();
+  }
+
 }

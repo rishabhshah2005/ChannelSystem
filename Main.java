@@ -44,7 +44,7 @@ public class Main {
                             ad.main(inp, current_user_id);
                         } else {
                             // Whatever classes are supposed to run after login is successfull go below
-                            Home h = new Home(current_user_id, quer);
+                            Home h = new Home(current_user_id, quer, user);
                             h.main(inp, current_user_id);
                         }
                     }
