@@ -2,7 +2,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 import DS.*;
 
-public class SearchChannels {
+public class SearchChannels implements ClassSkeleton{
     SQLQueries quer;
     LinkedListPrac<Integer> ll_pack;
     LinkedListPrac<PlayQue> all_channs;
@@ -157,7 +157,7 @@ public class SearchChannels {
 
     }
 
-    private void printMenu() {
+    public void printMenu() {
         System.out.println("1) Search by name");
         System.out.println("2) Search by Channel Number");
         System.out.println("3) Search by Channel Type");
@@ -214,5 +214,6 @@ public class SearchChannels {
         }
         return result;
     }
+
 
 }

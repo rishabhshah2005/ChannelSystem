@@ -41,7 +41,7 @@ public class Settings {
         System.out.println("5) Exit");
     }
 
-    void main(Scanner inp) throws SQLException, ClassNotFoundException {
+    void main(Scanner inp) throws SQLException {
 
         int index = 0;
         Misc.cls();

@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 import DS.*;
 
-public class Home {
+public class Home implements ClassSkeleton{
     LinkedListPrac<PlayQue> curr_playing = new LinkedListPrac<>();
     LinkedListPrac<Integer> pack_chann = new LinkedListPrac<>();
     SQLQueries quer;
@@ -17,7 +17,7 @@ public class Home {
         quer.getPackage(id, pack_chann);
     }
 
-    void printMenu() {
+    public void printMenu() {
         System.out.println("1) Play TV");
         System.out.println("2) Search Channels");
         System.out.println("3) Record Shows");

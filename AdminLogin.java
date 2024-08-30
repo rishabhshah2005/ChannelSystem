@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 import DS.*;
 
-public class AdminLogin {
+public class AdminLogin implements ClassSkeleton {
     LinkedListPrac<PlayQue> curr_playing = new LinkedListPrac<>();
     LinkedListPrac<Integer> pack_chann = new LinkedListPrac<>();
     SQLQueries sq;
@@ -54,7 +54,7 @@ public class AdminLogin {
         }
     }
 
-    void printMenu() {
+    public void printMenu() {
         System.out.println("1) Change user package");
         System.out.println("2) Update channel");
         System.out.println("3) View Request history");

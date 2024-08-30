@@ -2,7 +2,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 import DS.Misc;
 
-public class RecordShow {
+public class RecordShow implements ClassSkeleton {
     Scanner inp;
     SQLQueries sql;
 
@@ -34,15 +34,18 @@ public class RecordShow {
         sql.deleteRecordById(record_id, user_id);
     }
 
+    public void printMenu() {
+        System.out.println("1) Record");
+        System.out.println("2) View Recordings");
+        System.out.println("3) Delete Recordings");
+        System.out.println("4) Exit");
+    }
+
     public void main() throws SQLException {
         int index = 0;
         Misc.cls();
         while (index != 4) {
 
-            System.out.println("1) Record");
-            System.out.println("2) View Recordings");
-            System.out.println("3) Delete Recordings");
-            System.out.println("4) Exit");
             index = Misc.checkInt(inp, "Enter choice: ");
             switch (index) {
                 case 1:

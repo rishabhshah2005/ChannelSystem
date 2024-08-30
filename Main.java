@@ -3,7 +3,7 @@ import java.sql.SQLException;
 
 import DS.Misc;
 
-public class Main {
+public class Main{
     int current_user_id;
 
     public static void printMenu() {
